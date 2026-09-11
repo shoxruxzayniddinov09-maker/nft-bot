@@ -8,7 +8,7 @@ YOUR_CHAT_ID = 8578796045
 CHECK_INTERVAL = 180
 PRICE_FILE = "last_prices.json"
 
-gifts = TelegramGifts()
+gifts = TelegramGifts(cache_mode="http", asset_mode="lazy")
 
 def load_prices():
     if os.path.exists(PRICE_FILE):
