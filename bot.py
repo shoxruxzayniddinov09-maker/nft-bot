@@ -32,18 +32,23 @@ def get_cheapest_gifts(limit=12):
             info = gifts.get_gift(name)
             if info and "prices" in info:
                 prices = info["prices"]
-                price_list = [
-                    prices.get("floor_price_ton"),
-                    prices.get("getgems_price_ton"),
-                    prices.get("tgmrkt_price_ton"),
-                    prices.get("portal_price_ton"),
-                ]
-                valid = [p for p in price_list if p is not None and p > 0]
-                if valid:
-                    results.append({
-                        "name": info.get("full_name", name),
-                        "price": round(float(min(valid)), 2),
-                    })
+                            links = info.get("links", {})
+            options = [
+                ("Fragment", prices.get("floor_price_ton"), links.get("fragment")),
+                ("GetGems", prices.get("getgems_price_ton"), links.get("getgems")),
+                ("MRKT", prices.get("tgmrkt_price_ton"), links.get("tgmrkt")),
+                ("Portals", prices.get("portal_price_ton"), links.get("portal")),
+            ]
+            valid = [(m, float(p), l) for m, p, l in options if p is not None and p > 0]
+            if not valid:
+                continue
+            market, price, link = min(valid, key=lambda x: x[1])
+            results.append({
+                "name": info.get("full_name", name),
+                "price": round(price, 2),
+                "market": market,
+                "link": link or "",
+            })
         except Exception:
             continue
     return sorted(results, key=lambda x: x["price"])[:limit]
@@ -72,7 +77,10 @@ async def check_prices(context: ContextTypes.DEFAULT_TYPE):
                 reason = f"Arzonlashdi ({old_price} → {price} TON)"
 
         if should_notify:
-            messages.append(f"🔥 <b>{name}</b>\n💰 {price} TON\n📌 {reason}")
+                        msg = f"🔥 <b>{name}</b>\n💰 {price} TON\n🏪 {item.get('market', '')}\n📌 {reason}"
+            if item.get("link"):
+                msg += f"\n🔗 {item['link']}"
+            messages.append(msg)
 
         last_prices[name] = price
 
@@ -93,7 +101,9 @@ async def nfts_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     text = "<b>🏆 Eng arzon Telegram NFT sovg'alari:</b>\n\n"
     for i, item in enumerate(current, 1):
-        text += f"{i}. <b>{item['name']}</b> — {item['price']} TON\n"
+                    text += f"{i}. <b>{item['name']}</b> — {item['price']} TON ({item.get('market', '')})\n"
+            if item.get("link"):
+                text += f"{item['link']}\n"
     await update.message.reply_text(text, parse_mode="HTML")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
