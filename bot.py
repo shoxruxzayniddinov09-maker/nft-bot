@@ -77,10 +77,10 @@ async def check_prices(context: ContextTypes.DEFAULT_TYPE):
                 reason = f"Arzonlashdi ({old_price} → {price} TON)"
 
         if should_notify:
-                        msg = f"🔥 <b>{name}</b>\n💰 {price} TON\n🏪 {item.get('market', '')}\n📌 {reason}"
-            if item.get("link"):
-                msg += f"\n🔗 {item['link']}"
-            messages.append(msg)
+                                    messages.append(f"🔥 <b>{name}</b>\n💰 {price} TON\n🏪 {item.get('market','')}\n📌 {reason}\n🔗 {item.get('link','')}")
+            
+            
+            
 
         last_prices[name] = price
 
