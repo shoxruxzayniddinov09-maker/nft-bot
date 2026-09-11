@@ -43,6 +43,14 @@ def get_cheapest_gifts(limit=12):
             if not valid:
                 continue
             market, price, link = min(valid, key=lambda x: x[1])
+            slug = info.get("short_name") or name.lower().replace(" ", "")
+            urls = {
+                "Fragment": f"https://fragment.com/gifts/{slug}",
+                "GetGems": f"https://getgems.io/gifts/{slug}",
+                "MRKT": "https://t.me/mrkt",
+                "Portals": "https://t.me/portals",
+            }
+            link = urls.get(market, "") 
             results.append({
                 "name": info.get("full_name", name),
                 "price": round(price, 2),
