@@ -32,8 +32,8 @@ def get_cheapest_gifts(limit=12):
             info = gifts.get_gift(name)
             if info and "prices" in info:
                 prices = info["prices"]
-                            links = info.get("links", {})
-            options = [
+                links = info.get("links", {})
+                options = [
                 ("Fragment", prices.get("floor_price_ton"), links.get("fragment")),
                 ("GetGems", prices.get("getgems_price_ton"), links.get("getgems")),
                 ("MRKT", prices.get("tgmrkt_price_ton"), links.get("tgmrkt")),
