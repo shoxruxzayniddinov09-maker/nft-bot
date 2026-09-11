@@ -3,7 +3,7 @@ import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 from TelegramGifts import TelegramGifts
-BOT_TOKEN = "88169999822:AAFdWuLbVt2G3Y2K74A_0TA6I8FpxSQZrgQ"
+BOT_TOKEN = "8816999822:AAGEMuBg5JeEc7C4ZBJycbnuUE5K94dlWRI"
 YOUR_CHAT_ID = 8578796045
 CHECK_INTERVAL = 180
 PRICE_FILE = "last_prices.json"
