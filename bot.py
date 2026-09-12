@@ -116,7 +116,7 @@ async def nfts_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     text = "<b>🏆 Eng arzon Telegram NFT sovg'alari:</b>\n\n"
     for i, item in enumerate(current, 1):
-                                text += f"{i}. <b>{item['name']}</b> — {item['price']} TON ({item.get('market','')})\n{item.get('link','')}\n"
+                                            text += f"{i}. <b>{item['name']}</b> — {item['price']} TON\n{item.get('all','')}\n\n"
             
                 
     await update.message.reply_text(text, parse_mode="HTML")
