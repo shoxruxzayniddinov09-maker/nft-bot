@@ -21,7 +21,7 @@ def save_prices(data):
         json.dump(data, f, indent=2)
 
 def get_cheapest_gifts(limit=12):
-        popular = []
+    popular = []
     try:
         for g in (gifts.get_upgraded_gifts() or []):
             n = getattr(g, "full_name", None) or getattr(g, "short_name", None)
