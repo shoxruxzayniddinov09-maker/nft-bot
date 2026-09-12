@@ -21,11 +21,25 @@ def save_prices(data):
         json.dump(data, f, indent=2)
 
 def get_cheapest_gifts(limit=12):
-    popular = [
-        "Candy Cane", "Loot Bag", "Jelly Bunny", "Homemade Cake",
-        "Precious Peach", "Astral Shard", "Signet Ring", "Durov's Cap",
-        "Artisan Brick", "Evil Eye", "Easter Egg", "Crystal Ball"
-    ]
+        popular = []
+    try:
+        for g in (gifts.get_upgraded_gifts() or []):
+            n = getattr(g, "full_name", None) or getattr(g, "short_name", None)
+            if n:
+                popular.append(n)
+    except Exception:
+        pass
+    if not popular:
+        popular = [
+            "Candy Cane", "Loot Bag", "Jelly Bunny", "Homemade Cake",
+            "Precious Peach", "Astral Shard", "Signet Ring", "Durov's Cap",
+            "Artisan Brick", "Evil Eye", "Easter Egg", "Crystal Ball",
+        ]
+    popular = popular[:40]
+        
+        
+    
+    
     results = []
     for name in popular:
         try:
