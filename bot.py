@@ -51,7 +51,7 @@ def get_cheapest_gifts(limit=12):
                 "Portals": "https://t.me/portals",
             }
             link = urls.get(market, "") 
-                        all_text = "\n".join([f"{m} {round(p, 2)} TON — {urls.get(m, '')}" for m, p, l in sorted(valid, key=lambda x: x[1])])
+                        all_text = "\n".join([f"{m} {round(p, 2)} TON" for ...
             results.append({
                 "name": info.get("full_name", name),
                 "price": round(price, 2),
